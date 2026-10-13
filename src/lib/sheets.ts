@@ -47,33 +47,38 @@ export async function getSheetData(): Promise<SheetRow[]> {
   const rows = res.data.values ?? [];
   if (rows.length < 2) return [];
 
-  // La primera fila es el encabezado; la saltamos
+  // Layout del Sheet "Flujo Reina Japonesa" (21 cols, incluye AÑO en col G):
+  //  A ESTADO | B email | C SOLICITANTE | D LINEA PRESUPUESTARIA |
+  //  E Marca temporal | F MES | G AÑO | H PROYECTO | I NRO OC |
+  //  J PROVEEDOR | K MONTO | L DESCRIPCIÓN | M RENDIR A |
+  //  N TIPO DE DOCUMENTO | O NRO DOCUMENTO | P RUT | Q BANCO |
+  //  R NUMERO DE CUENTA | S CORREO PROVEEDOR | T TIPO DE CUENTA | U Columna 19
   return rows.slice(1).map((row): SheetRow => ({
     estado:               (row[0]  ?? '').trim(),
     email:                row[1]  ?? '',
     solicitadaPor:        row[2]  ?? '',
-    lineaPresupuestaria:  row[3]  ?? '',
+    lineaPresupuestaria:  (row[3]  ?? '').trim(),
     marcaTemporal:        row[4]  ?? '',
     mes:                  row[5]  ?? '',
-    proyecto:             row[6]  ?? '',
-    nroOC:                row[7]  ?? '',
-    proveedor:            row[8]  ?? '',
-    monto:                parseMonto(row[9]),
-    descripcion:          row[10] ?? '',
-    rendirA:              row[11] ?? '',
-    col13:                row[12] ?? '',
-    col14:                row[13] ?? '',
-    tipoDocumento:        row[14] ?? '',
-    nroDocumento:         row[15] ?? '',
-    rut:                  row[16] ?? '',
-    banco:                row[17] ?? '',
-    numeroCuenta:         row[18] ?? '',
-    correoProveedor:      row[19] ?? '',
-    account:              row[20] ?? '',
-    linkOC:               row[21] ?? '',
-    linkFactura:          row[22] ?? '',
-    fechaFactura:         row[23] ?? '',
-    linkPago:             row[24] ?? '',
+    proyecto:             row[7]  ?? '',   // col H
+    nroOC:                row[8]  ?? '',   // col I
+    proveedor:            row[9]  ?? '',   // col J
+    monto:                parseMonto(row[10]),  // col K
+    descripcion:          row[11] ?? '',   // col L
+    rendirA:              row[12] ?? '',   // col M
+    col13:                row[6]  ?? '',   // col G = AÑO (reusamos este slot)
+    col14:                row[19] ?? '',   // col T = TIPO DE CUENTA
+    tipoDocumento:        row[13] ?? '',   // col N
+    nroDocumento:         row[14] ?? '',   // col O
+    rut:                  row[15] ?? '',   // col P
+    banco:                row[16] ?? '',   // col Q
+    numeroCuenta:         row[17] ?? '',   // col R
+    correoProveedor:      row[18] ?? '',   // col S
+    account:              row[20] ?? '',   // col U = Columna 19
+    linkOC:               '',              // ya no existe
+    linkFactura:          '',              // ya no existe
+    fechaFactura:         '',              // ya no existe
+    linkPago:             '',              // ya no existe
   }));
 }
 
