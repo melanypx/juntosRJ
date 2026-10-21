@@ -16,8 +16,8 @@ interface Props {
 }
 
 const REFRESH_MS = 5 * 60 * 1000;
-// TODO: reemplazar con el link del Google Form de Reina Japonesa cuando esté listo
-const FORM_NUEVA_OC = 'https://forms.gle/JdSU9Q93kLZYhcu27';
+const FORM_NUEVA_OC =
+  'https://docs.google.com/forms/d/e/1FAIpQLSelhrE-dWg6pGl6JEG0d3Oh_OweNfpu8aGxa9j1cZDhYcPYUQ/viewform';
 
 type Tab = 'resumen' | 'presupuesto' | 'ocs';
 
